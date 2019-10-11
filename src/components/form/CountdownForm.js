@@ -1,28 +1,126 @@
 import React from 'react';
-import Input from '../componenets/Input'
+import Input from '../componenets/Input';
+import  { Redirect } from 'react-router-dom'
+import { createCountdown } from '../../util/database';
+import moment from 'moment';
+
+function convertDateTimeToDatetime(date, time){
+    return date + " " + time;
+}
+
+function convertCountdownValuesToAPI(values){
+    return {
+        name: values.name,
+        key: values.key,
+        time: convertDateTimeToDatetime(values.date, values.time)
+    }
+}
+
+function getCurrentDate(){
+    return moment().format("YYYY-MM-DD");
+}
+
+function getTime(){
+    return moment().format("HH:mm");
+}
+
 function CountdownForm(props) {
-    const [countdownValues, setCountdownValues] = React.useState({ name: "", date:"", time: "", key:"" });
+    const [countdownValues, setCountdownValues] = React.useState({ name: "", date:getCurrentDate(), time: getTime(), key:"" });
     const [eventValues, setEventValues] = React.useState([]);
     const [eventsJSX, setEventsJSX] = React.useState();
+    const [nextId, setNextId] = React.useState(-1); // negative to represent not in database yet
+    const [errors, setErrors] = React.useState()
 
     const onChangeCountdown = (name, value) => {
-        setCountdownValues({ ...countdownValues, [name]: value });
+        let newValue = {...countdownValues, [name]:value};
+        setCountdownValues(newValue);
     };
+
+    const onChangeEvent = (name, value, groupId) => {
+        let newValue = {...eventValues};
+        newValue[groupId][name] = value;
+        setEventValues(newValue);
+    }
+
+    const onSuccessfulCountdownSubmit = (response) => {
+        const countdownKey = response.data.id;
+        setErrors(null);
+        console.log(response.data)
+        /* Object.keys(eventValues)
+            .forEach(() => {
+                //todo: add events and redirect to countdown
+            }) */
+        const url = '/-/' + countdownKey ;
+        setErrors(<Redirect to={url}/>)
+        
+    }
+
+    const onFailToSubmitCountdown = (error) => {
+        setErrors(<div>
+            <h3>Errors:</h3>
+            <pre>{JSON.stringify(error.response.data, null, 2)}</pre>
+        </div>);
+    } 
 
     const onSubmit = (event) => {
         event.preventDefault();
-        //todo: do stuff w/ event
+        console.log(convertCountdownValuesToAPI(countdownValues));
+        createCountdown(convertCountdownValuesToAPI(countdownValues))
+            .then(onSuccessfulCountdownSubmit)
+            .catch(onFailToSubmitCountdown);
     }
     
     const addEventForm = (event) => {
-        setEventValues([...eventValues, {name:"", text:"", time:""}])
+        let newEventValues = {...eventValues};
+        newEventValues[nextId] = {localId:nextId, name:"", text:"", time:""};
+        setEventValues(newEventValues);
+        setNextId(nextId - 1);
+    }
+    
+    const removeEventForm = (localId) => {
+        let newEventValues = JSON.parse(JSON.stringify(eventValues));
+        delete newEventValues[localId];
+        setEventValues(newEventValues);
     }
 
-    React.useEffect(() => {})
-
-    const createEventFormsFromValues = (values) => {
-        
-    }
+    React.useEffect(() => {
+        let newjsx = Object.keys(eventValues).map((key, index) => {
+            const event = eventValues[key];
+            return (
+                <div key={key}>
+                    <h4>Event {index + 1}</h4>
+                    Name:
+                    <Input 
+                        type="text"
+                        name="name"
+                        value={event.name}
+                        onChange={onChangeEvent}
+                        groupId={event.localId}
+                    />
+                    <br/>
+                    Text:
+                    <Input 
+                        type="text"
+                        name="text"
+                        value={event.text}
+                        onChange={onChangeEvent}
+                        groupId={event.localId}
+                    />
+                    <br/>
+                    Time:
+                    <Input 
+                        type="time"
+                        name="time"
+                        value={event.time}
+                        onChange={onChangeEvent}
+                        groupId={event.localId}
+                    />
+                    <button type="button" onClick={() => removeEventForm(event.localId)}>Remove Event {index + 1}</button>
+                </div>
+            )
+        })
+        setEventsJSX(newjsx);
+    }, [eventValues])
 
     return (
         <div>
@@ -67,14 +165,15 @@ function CountdownForm(props) {
                     />
                 </label>
                 <br/>
-                <button onClick={addEventForm}>Add Event</button>
+                {/*
+                <h3>Events:</h3>
+                {eventsJSX}
+                 <button type="button" onClick={addEventForm}>Add Event</button>
+                 */}
                 <br/>
-                {}
+                {errors}
                 <input type="submit" value="Submit" />
             </form>
-            <div>
-
-            </div>
         </div>
     );
 }

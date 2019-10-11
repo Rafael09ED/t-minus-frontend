@@ -1,15 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import moment from 'moment';
-import { hostname } from '../../util/database';
+import { getCountdowns } from '../../util/database';
 import { NavLink } from 'react-router-dom';
 
 
 function CountdownList(props) {
     const [jsxValues, setJsxValues] = React.useState((<p>loading...</p>));
     React.useEffect(() => {
-        let url = hostname  + '/countdown/'
-        axios.get(url)
+        getCountdowns()
             .then((response) => {
                 //todo: handle bad response, fix timezone
                 setJsxValues(response.data.map((countdownJson) => {

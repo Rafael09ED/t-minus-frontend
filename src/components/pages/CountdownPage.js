@@ -1,13 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
-import { hostname } from '../../util/database';
+import { getCountdown } from '../../util/database';
 import { NavLink } from 'react-router-dom'
 
 momentDurationFormatSetup(moment);
-
-let url = hostname  + '/countdown/'
 
 function CountdownPage(props) {
   const [jsxValues, setJsxValues] = React.useState((<p>loading...</p>));
@@ -15,7 +12,7 @@ function CountdownPage(props) {
   const [currentTime, setCurrentTime] = React.useState(moment());
 
   React.useEffect(() => {
-    axios.get(url + props.match.params.id)
+    getCountdown(props.match.params.id)
       .then((response) => {
         setCountdownData(response.data)
       });
@@ -33,8 +30,8 @@ function CountdownPage(props) {
       }
       return (
         <div className="countdown_timer">
-          <h2>T{minus ? " -":" +"}{countdown} </h2>
-          <p>{countdownData.event_text}</p>
+          <h2>T{minus ? " - ":" + "}{countdown}</h2>
+          <p>{countdownData.event_text}</p> 
         </div>
       );
     });
