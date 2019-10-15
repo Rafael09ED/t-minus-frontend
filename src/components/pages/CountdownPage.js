@@ -3,10 +3,20 @@ import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
 import { getCountdown } from '../../util/database';
 import { NavLink } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 momentDurationFormatSetup(moment);
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(1, 2),
+  },
+}));
+
 function CountdownPage(props) {
+  const classes = useStyles();
   const [jsxValues, setJsxValues] = React.useState((<p>loading...</p>));
   const [countdownData, setCountdownData] = React.useState({});
   const [currentTime, setCurrentTime] = React.useState(moment());
@@ -44,10 +54,12 @@ function CountdownPage(props) {
   }, [currentTime])
 
   return (
-      <div className="cdtp_header">
-          <span className="countdown_timer_name">{countdownData.name}</span>
-          <span className="cdtp_navlink_home"><NavLink to="/">t-min.us</NavLink></span>
-          {jsxValues}
+      <div className="cdtp_header">   
+        <Paper elevation={0} className={classes.paper} style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Typography className="countdown_timer_name">{countdownData.name}</Typography>
+          <Typography><NavLink to="/" style={{ textDecoration: 'none', color:'grey' }}>t-min.us</NavLink></Typography>
+        </Paper>
+        {jsxValues}
       </div>
   );
 }
