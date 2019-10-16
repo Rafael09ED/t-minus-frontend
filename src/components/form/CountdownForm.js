@@ -4,6 +4,13 @@ import  { Redirect } from 'react-router-dom'
 import { createCountdown } from '../../util/database';
 import moment from 'moment';
 
+import {
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+import { TextField } from '@material-ui/core';
+
+
 function convertDateTimeToDatetime(date, time){
     return date + " " + time;
 }
@@ -12,20 +19,16 @@ function convertCountdownValuesToAPI(values){
     return {
         name: values.name,
         key: values.key,
-        time: convertDateTimeToDatetime(values.date, values.time)
+        time: values.time.format()
     }
 }
 
-function getCurrentDate(){
-    return moment().format("YYYY-MM-DD");
-}
-
 function getTime(){
-    return moment().format("HH:mm");
+    return moment();
 }
 
 function CountdownForm(props) {
-    const [countdownValues, setCountdownValues] = React.useState({ name: "", date:getCurrentDate(), time: getTime(), key:"" });
+    const [countdownValues, setCountdownValues] = React.useState({name: "", time: getTime(), key:"" });
     const [eventValues, setEventValues] = React.useState([]);
     const [eventsJSX, setEventsJSX] = React.useState();
     const [nextId, setNextId] = React.useState(-1); // negative to represent not in database yet
@@ -125,45 +128,38 @@ function CountdownForm(props) {
     return (
         <div>
             <form onSubmit={onSubmit}>
-                <label>
-                    Countdown Name:
-                    <Input 
-                        type="text"
-                        name="name"
-                        value={countdownValues.name}
-                        onChange={onChangeCountdown}
-                    />
-                </label>
+                <TextField 
+                    margin="normal"
+                    label="Name"
+                    value={countdownValues.name}
+                    onChange={(event) => onChangeCountdown("name", event.target.value)}
+                />
                 <br/>
-                <label>
-                    T-0 Date:
-                    <Input 
-                        type="date" 
-                        name="date" 
-                        value={countdownValues.date}
-                        onChange={onChangeCountdown}
-                    />
-                </label>
+                <KeyboardDatePicker
+                    margin="normal"
+                    label="T-0 Date"
+                    format="YYYY-MM-DD"
+                    value={countdownValues.time}
+                    onChange={(newValue) => onChangeCountdown("time", newValue)}
+                />
                 <br/>
-                <label>
-                    T-0 Time:
-                    <Input 
-                        type="time" 
-                        name="time" 
-                        value={countdownValues.time}
-                        onChange={onChangeCountdown}
-                    />
-                </label>
+                <KeyboardTimePicker 
+                    margin="normal"
+                    label="T-0 Time"
+                    value={countdownValues.time}
+                    onChange={(newValue) => onChangeCountdown("time", newValue)}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change time',
+                      }}
+                />
                 <br/>
-                <label>
-                    Edit Key (similar to password):
-                    <Input 
-                        type="text"
-                        name="key" 
-                        value={countdownValues.key}
-                        onChange={onChangeCountdown}
-                    />
-                </label>
+                <TextField 
+                    margin="normal"
+                    label="Key"
+                    value={countdownValues.key}
+                    onChange={(event) => onChangeCountdown("key", event.target.value)}
+                    helperText="Similar to password"
+                />
                 <br/>
                 {/*
                 <h3>Events:</h3>
