@@ -5,6 +5,7 @@ import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { Breakpoint } from 'react-socks';
 
 const LinkForward = React.forwardRef((props, ref) => <NavLink innerRef={ref} {...props} />);
 
@@ -57,12 +58,21 @@ function NavBar(props) {
     return (
         <header style={{display: 'flex', justifyContent: 'space-between'}}>     
             <Paper elevation={0} className={classes.paper} >
-                <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                    <Link component={LinkForward} color="inherit" to="/">
-                        t-min.us
-                    </Link>
-                    {breadcrumbs}
-                </Breadcrumbs>
+                <Breakpoint small up>
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                        <Link component={LinkForward} color="inherit" to="/">
+                            t-min.us
+                        </Link>
+                        {breadcrumbs}
+                    </Breadcrumbs>
+                </Breakpoint>
+                <Breakpoint xsmall only>
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                        <Link component={LinkForward} color="inherit" to="/">
+                            t-min.us
+                        </Link>
+                    </Breadcrumbs>
+                </Breakpoint>
             </Paper>
             <nav>
                 <Paper elevation={0} className={classes.paper} >

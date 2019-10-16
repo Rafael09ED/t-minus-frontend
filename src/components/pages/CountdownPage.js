@@ -40,7 +40,8 @@ function CountdownPage(props) {
       }
       return (
         <div className="countdown_timer">
-          <h2>T{minus ? " - ":" + "}{countdown}</h2>
+          <br></br>
+          <Typography variant="h2">T{minus ? " - ":" + "}{countdown.replace(/,/gi, ',/').split('/').map((val) => <span style={{whiteSpace:"nowrap"}}>{val}</span>)}</Typography>
           <p>{countdownData.event_text}</p> 
         </div>
       );

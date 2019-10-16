@@ -9,11 +9,7 @@ import {
     KeyboardDatePicker,
   } from '@material-ui/pickers';
 import { TextField } from '@material-ui/core';
-
-
-function convertDateTimeToDatetime(date, time){
-    return date + " " + time;
-}
+import Button from '@material-ui/core/Button';
 
 function convertCountdownValuesToAPI(values){
     return {
@@ -28,7 +24,7 @@ function getTime(){
 }
 
 function CountdownForm(props) {
-    const [countdownValues, setCountdownValues] = React.useState({name: "", time: getTime(), key:"" });
+    const [countdownValues, setCountdownValues] = React.useState({name: "", time: getTime(), key:"key" });
     const [eventValues, setEventValues] = React.useState([]);
     const [eventsJSX, setEventsJSX] = React.useState();
     const [nextId, setNextId] = React.useState(-1); // negative to represent not in database yet
@@ -59,14 +55,22 @@ function CountdownForm(props) {
     }
 
     const onFailToSubmitCountdown = (error) => {
-        setErrors(<div>
-            <h3>Errors:</h3>
-            <pre>{JSON.stringify(error.response.data, null, 2)}</pre>
-        </div>);
+        if (error.response) {
+            setErrors(<div>
+                <h3>Errors:</h3>
+                <pre>{JSON.stringify(error.response.data, null, 2)}</pre>
+            </div>);
+        } else {
+            setErrors(<div>
+                 <h3>Errors:</h3>
+                 <p>No Connection To Server</p>
+            </div>)
+        }
+            
     } 
 
     const onSubmit = (event) => {
-        event.preventDefault();
+        if (event) event.preventDefault();
         console.log(convertCountdownValuesToAPI(countdownValues));
         createCountdown(convertCountdownValuesToAPI(countdownValues))
             .then(onSuccessfulCountdownSubmit)
@@ -130,35 +134,30 @@ function CountdownForm(props) {
             <form onSubmit={onSubmit}>
                 <TextField 
                     margin="normal"
-                    label="Name"
+                    label="Title"
                     value={countdownValues.name}
                     onChange={(event) => onChangeCountdown("name", event.target.value)}
+                    fullWidth
                 />
                 <br/>
                 <KeyboardDatePicker
                     margin="normal"
-                    label="T-0 Date"
-                    format="YYYY-MM-DD"
+                    label="Date"
+                    format="MM/DD/YYYY"
                     value={countdownValues.time}
                     onChange={(newValue) => onChangeCountdown("time", newValue)}
+                    fullWidth
                 />
                 <br/>
                 <KeyboardTimePicker 
                     margin="normal"
-                    label="T-0 Time"
+                    label="Time"
                     value={countdownValues.time}
                     onChange={(newValue) => onChangeCountdown("time", newValue)}
                     KeyboardButtonProps={{
                         'aria-label': 'change time',
                       }}
-                />
-                <br/>
-                <TextField 
-                    margin="normal"
-                    label="Key"
-                    value={countdownValues.key}
-                    onChange={(event) => onChangeCountdown("key", event.target.value)}
-                    helperText="Similar to password"
+                      fullWidth
                 />
                 <br/>
                 {/*
@@ -168,7 +167,9 @@ function CountdownForm(props) {
                  */}
                 <br/>
                 {errors}
-                <input type="submit" value="Submit" />
+                <Button type="submit" variant="contained" color="primary" onClick={onSubmit}>
+                    Submit
+                </Button>
             </form>
         </div>
     );
