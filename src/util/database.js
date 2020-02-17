@@ -1,5 +1,5 @@
 import axios from 'axios';
-const hostname = 'http://localhost:8000';
+const hostname = 'http://t-min.us:8080';
 
 
 const getCountdowns = () => {
