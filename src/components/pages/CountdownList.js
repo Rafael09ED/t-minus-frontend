@@ -31,7 +31,6 @@ function CountdownList(props) {
                                 key={countdownJson.id} 
                                 primary={countdownJson.name}
                                 secondary={moment(countdownJson.time).format('LLLL')}
-                                
                             />
                         </ListItem>
                     );
@@ -47,13 +46,10 @@ function CountdownList(props) {
         <div>
             <br/>
             <Container maxWidth="sm">
-                <Paper className={classes.root}>
-                    <Typography variant="h4">Countdowns</Typography>
-                    <br/>
-                    {jsxValues}
-                </Paper>
+                <Typography variant="h4">Latest Countdowns</Typography>
+                <br/>
+                {jsxValues}
             </Container>
-
         </div>
     );
 }

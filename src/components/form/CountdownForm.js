@@ -7,6 +7,7 @@ import moment from 'moment';
 import {
     KeyboardTimePicker,
     KeyboardDatePicker,
+    KeyboardDateTimePicker
   } from '@material-ui/pickers';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -140,24 +141,13 @@ function CountdownForm(props) {
                     fullWidth
                 />
                 <br/>
-                <KeyboardDatePicker
+                <KeyboardDateTimePicker
                     margin="normal"
-                    label="Date"
-                    format="MM/DD/YYYY"
+                    label="Epoch"
+                    format="MM/DD/YYYY @ hh:mm a"
                     value={countdownValues.time}
                     onChange={(newValue) => onChangeCountdown("time", newValue)}
                     fullWidth
-                />
-                <br/>
-                <KeyboardTimePicker 
-                    margin="normal"
-                    label="Time"
-                    value={countdownValues.time}
-                    onChange={(newValue) => onChangeCountdown("time", newValue)}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change time',
-                      }}
-                      fullWidth
                 />
                 <br/>
                 {/*

@@ -18,12 +18,10 @@ function CountdownCreate() {
 
     return (
         <div>
-            <Box m={6} /> 
+            <br/>
             <Container maxWidth="sm" >
-                <Paper className={classes.root}>
-                    <Typography variant="h5" component="h3">Create Countdown</Typography>
+                    <Typography variant="h4" component="h3">Create Countdown</Typography>
                     <CountdownForm />
-                </Paper>
             </Container>
         </div>
     );
