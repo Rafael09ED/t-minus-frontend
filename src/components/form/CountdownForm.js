@@ -1,12 +1,9 @@
 import React from 'react';
-import Input from '../componenets/Input';
 import  { Redirect } from 'react-router-dom'
 import { createCountdown } from '../../util/database';
 import moment from 'moment';
 
 import {
-    KeyboardTimePicker,
-    KeyboardDatePicker,
     KeyboardDateTimePicker
   } from '@material-ui/pickers';
 import { TextField } from '@material-ui/core';
@@ -26,8 +23,6 @@ function getTime(){
 
 function CountdownForm(props) {
     const [countdownValues, setCountdownValues] = React.useState({name: "", time: getTime(), key:"key" });
-
-    const [nextId, setNextId] = React.useState(-1); // negative to represent not in database yet
     const [errors, setErrors] = React.useState()
 
     const onChangeCountdown = (name, value) => {

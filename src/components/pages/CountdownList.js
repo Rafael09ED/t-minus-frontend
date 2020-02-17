@@ -1,21 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import { getCountdowns } from '../../util/database';
-import { NavLink } from 'react-router-dom';
-import { Container, Paper, Typography, List, ListItemText, ListItem } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-      padding: theme.spacing(3, 2),
-    },
-}));
-  
+import { Container, Typography, List, ListItemText, ListItem } from '@material-ui/core';  
 
 function CountdownList(props) {
-    const classes = useStyles();
-
     const [jsxValues, setJsxValues] = React.useState((<p>loading...</p>));
+    
     React.useEffect(() => {
         getCountdowns()
             .then((response) => {
@@ -39,7 +29,7 @@ function CountdownList(props) {
                     {listItems}
                 </List>)
             })
-    }, [props.history.length]);
+    }, [props.history, props.history.length]);
     
 
     return (
