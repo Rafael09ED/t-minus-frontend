@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,iBACI,iBAAkB,CAClB,aACJ,CAEA,mBACI,WACJ,CAEA,UACI,YACJ","file":"main.2103dc06.chunk.css","sourcesContent":[".countdown_timer {\r\n    text-align: center;\r\n    font-size: 2em;\r\n}\r\n\r\n.cdtp_navlink_home{\r\n    float: right;\r\n}\r\n\r\n#navbar > * {\r\n    padding: 10px;\r\n}"]}
