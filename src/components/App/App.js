@@ -4,7 +4,6 @@ import './App.css';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import CountdownPage from '../pages/CountdownPage';
-import CountdownEdit from '../pages/CountdownEdit';
 import CountdownCreate from '../pages/CountdownCreate';
 import CountdownList from '../pages/CountdownList';
 import NavBar from '../NavBar/NavBar';
@@ -19,9 +18,8 @@ function App() {
       <Route path={'/about'} exact component={About} />
       <Route path={'/create'} exact component={CountdownCreate} />
       <Route path={'/-/:id'} exact component={CountdownPage} />
-      <Route path={'/-/:id/edit'} component={CountdownEdit} />
     </React.Fragment>
   );
 }
-
+asds
 export default App;

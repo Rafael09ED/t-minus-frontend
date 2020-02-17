@@ -3,20 +3,9 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-      padding: theme.spacing(3, 2),
-    },
-}));
-  
+import Box from '@material-ui/core/Box'; 
 
 function About() {
-    const classes = useStyles();
-
-
     return (
       <div>
         <br/>
