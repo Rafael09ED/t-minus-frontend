@@ -1,5 +1,5 @@
 import axios from 'axios';
-const hostname = 'http://t-min-dot-us.herokuapp.com/countdown/';
+const hostname = 'http://t-min-dot-us.herokuapp.com';
 
 
 const getCountdowns = () => {

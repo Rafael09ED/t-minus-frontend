@@ -8,13 +8,13 @@ import  { BreakpointProvider } from 'react-socks';
 
 
 const root = (
-  <BrowserRouter>
+  <HashRouter>
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <BreakpointProvider>
         <Route component={App} />
       </BreakpointProvider>
     </MuiPickersUtilsProvider>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 ReactDOM.render(root, document.getElementById('root'));
