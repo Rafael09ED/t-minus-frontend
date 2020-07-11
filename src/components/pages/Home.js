@@ -25,7 +25,7 @@ function Home() {
         <Container maxWidth="sm">
           <Typography variant="h2" component="h3">t-min.us</Typography>
           <br/>
-          <Typography variant="body1">A tool for generating countdowns</Typography>
+          <Typography variant="body1">A tool for generating countdowns with URLs you can share</Typography>
           <br/>
           <Button component={Link} to='/list' variant="contained" className={classes.button}>List</Button>
           <Button component={Link} to='/create' variant="contained" color="primary" className={classes.button}>Create</Button>
