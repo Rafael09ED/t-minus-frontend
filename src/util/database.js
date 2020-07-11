@@ -1,5 +1,5 @@
 import axios from 'axios';
-const hostname = 'http://localhost:8000';
+const hostname = 'http://t-min-dot-us.herokuapp.com/countdown/';
 
 
 const getCountdowns = () => {
@@ -18,33 +18,5 @@ const createCountdown = (data) => {
     return axios.post(url, data);
 }
 
-/*
-const createCountdownEvent = (data) => {
-    let url = hostname + '/countdown-event/'
-    return axios.post(url, data);
-}
-
-const updateCountdown = (id, data) => {
-
-}
-
-const deleteCoutdown = (id) => {
-
-}
-
-const getCountdownEvent = (id) => {
-
-}
-
-
-
-const updateCountdownEvent = (id, data) => {
-
-}
-
-const deleteCountdownEvent = (id) => {
-
-}
-*/
 
 export { getCountdowns, getCountdown, createCountdown };
